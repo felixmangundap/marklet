@@ -1,5 +1,7 @@
 import { useState } from 'preact/hooks';
 import { marked } from 'marked';
+import Helmet from 'preact-helmet';
+
 import { DocumentTextIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
 // import hljs from 'highlight.js';
 import 'highlight.js/styles/github.css';
@@ -18,6 +20,7 @@ const MarkdownEditor = () => {
 
   return (
     <div className='overflow-hidden flex flex-col h-full w-full relative'>
+      <Helmet title={title || 'New Note'} />
       {/* <input className='
             text-zinc-700 dark:text-zinc-50 bg-zinc-50 dark:bg:text-zinc-700
             border border-zinc-700 dark:border-zinc-50 outline-none rounded-full
