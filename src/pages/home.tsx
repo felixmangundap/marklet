@@ -1,6 +1,5 @@
 import Container from "../components/container";
-import MarkdownEditor from "../components/marked";
-import ThemeToggle from "../components/themeToggle";
+import MarkdownEditor from "../components/markdownEditor";
 
 const Home = () => {
   return (

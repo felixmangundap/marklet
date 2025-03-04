@@ -1,15 +1,16 @@
 import { useThemeStore } from '../stores/useThemeStore';
+import { SunIcon, MoonIcon } from '@heroicons/react/24/outline';
 
 const ThemeToggle = () => {
   const { isDarkMode, toggleTheme } = useThemeStore();
 
   return (
-    <button
+    <div
       onClick={toggleTheme}
-      className="bg-gray-200 dark:bg-gray-800 rounded-full"
+      className='cursor-pointer'
     >
-      {isDarkMode ? '🌙' : '☀️'}
-    </button>
+      {isDarkMode ? <SunIcon className='size-6' /> : <MoonIcon className='size-6' /> }
+    </div>
   );
 };
 

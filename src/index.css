@@ -1,6 +1,8 @@
 @import '@fontsource-variable/open-sans';
 @import 'tailwindcss';
 
+@plugin "@tailwindcss/typography";
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
@@ -59,6 +61,44 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+.preview * {
+  color: inherit;
+}
+
+.preview h1, h2, h3, h4 {
+  font-weight: 700;
+}
+
+.preview strong {
+  font-weight: 700;
+}
+
+.preview h1 {
+  font-size: 2em;
+  line-height: 1.2;
+}
+
+.preview h2 {
+  font-size: 1.75em;
+}
+
+.preview h3 {
+  font-size: 1.5em;
+}
+
+.preview h4 {
+  font-size: 1.25em;
+}
+
+.preview hr {
+  /* margin: 8px 0; */
+}
+
+.preview ul {
+  /* padding-left: 40px; */
+  /* margin: 16px 0; */
 }
 
 @media (prefers-color-scheme: light) {
