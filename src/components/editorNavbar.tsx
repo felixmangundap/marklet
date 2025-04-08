@@ -1,10 +1,10 @@
-import { useState } from 'preact/hooks';
-import { ArrowUpOnSquareIcon, TrashIcon, DocumentTextIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
+import { ArrowUpOnSquareIcon, TrashIcon, DocumentTextIcon, PencilSquareIcon, ArrowsUpDownIcon } from '@heroicons/react/24/outline';
 
 import ThemeToggle from './themeToggle';
+import { useEditorStore } from '../stores/useEditorStore';
 
 const EditorNavBar = () => {
-  const [title, setTitle] = useState('');
+  const { title, isPreview, setTitle, togglePreview, toggleView } = useEditorStore();
 
   return (
     <div className='p-8 w-full flex items-center justify-between'>
@@ -19,9 +19,12 @@ const EditorNavBar = () => {
         placeholder='untitled document'
         onInput={(e) => setTitle(e.currentTarget.value)}
       />
-      <div className='flex flex-row justify-end w-64'>
-        <div className='text-zinc-700 dark:text-zinc-50 text-l leading-none mr-4 cursor-pointer'>
-          <PencilSquareIcon className="size-6" />
+      <div className='flex flex-row items-center justify-end w-64'>
+        <div className='text-zinc-700 dark:text-zinc-50 text-l leading-none mr-4 cursor-pointer' onClick={toggleView}>
+          <ArrowsUpDownIcon className="size-6" />
+        </div>
+        <div className='text-zinc-700 dark:text-zinc-50 text-l leading-none mr-4 cursor-pointer' onClick={togglePreview}>
+          {isPreview ? <PencilSquareIcon className='size-6' /> : <DocumentTextIcon className='size-6' />}
         </div>
         <div className='text-zinc-700 dark:text-zinc-50 text-l leading-none mr-4 cursor-pointer'>
           <ArrowUpOnSquareIcon className="size-6" />
