@@ -1,24 +1,21 @@
-import { Router, Route } from 'preact-router';
+import { Router } from 'preact-router';
 import { lazy, Suspense, useEffect } from 'preact/compat';
 import Helmet from 'preact-helmet';
 
 import { useThemeStore } from './stores/useThemeStore';
 import PublicRoute from './components/publicRoute';
 import PrivateRoute from './components/privateRoute';
-import NavBar from './components/navbar';
+import Editor from './pages/editor';
+import AuthPage from './pages/auth';
 
-const Home = lazy(() => import('./pages/home'));
+const Landing = lazy(() => import('./pages/landing'));
 const Notes = lazy(() => import('./pages/notes'));
 
 const App = () => {
   const { isDarkMode } = useThemeStore();
 
   useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+    document.documentElement.classList.toggle('dark', isDarkMode);
   }, [isDarkMode]);
 
   // onAuthStateChanged(auth, (user) => {
@@ -32,28 +29,33 @@ const App = () => {
     <Suspense fallback={<div>Loading...</div>}>
       <Helmet
         htmlAttributes={{ lang: 'en', amp: undefined }} // amp takes no value
-        title='Marklet'
-        titleTemplate='Marklet - %s'
+        title='a markdown booklet'
+        titleTemplate='marklet - %s'
         defaultTitle='Lightweight Markdown Note Taking App'
         titleAttributes={{ itemprop: 'name', lang: 'en' }}
-        base={{ target: '_blank', href: 'http://mysite.com/' }}
+        base={{ target: '_blank', href: '/' }}
         meta={[
           { name: 'description', content: 'Marklet - Lightweight Markdown Note Taking App' },
           { property: 'og:type', content: 'article' }
         ]}
         link={[
-          { rel: 'canonical', href: 'http://mysite.com/example' },
-          { rel: 'icon', type: 'image/svg+xml', href: '../vite.svg' },
+          // { rel: 'canonical', href: 'http://mysite.com/example' },
+          { rel: 'icon', type: 'image/svg+xml', href: '../m_icon.svg' },
         ]}
       />
       <Router>
-        <Route path='/' component={Home} />
-        {/* <PublicRoute path='/home'>
-          <Home />
+        <PublicRoute path='/'>
+          <Landing />
         </PublicRoute>
-        <PrivateRoute path='/notes'>
+        <PublicRoute path='/authPage'>
+          <AuthPage />
+        </PublicRoute>
+        <PrivateRoute path='/noteEditor'>
+          <Editor />
+        </PrivateRoute>
+        <PrivateRoute path='/dashboard'>
           <Notes />
-        </PrivateRoute> */}
+        </PrivateRoute>
       </Router>
     </Suspense>
   )

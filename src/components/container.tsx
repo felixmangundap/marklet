@@ -1,6 +1,7 @@
 import { ReactNode } from "preact/compat";
 import NavBar from "./navbar";
 import EditorNavBar from "./editorNavbar";
+import PublicNavBar from "./publicNavbar";
 
 type Props = {
   children: ReactNode;
@@ -8,6 +9,7 @@ type Props = {
 }
 
 export enum NavBarType {
+  PUBLIC = 'public',
   STANDARD = 'standard',
   EDITOR = 'editor',
   NONE = 'none',
@@ -21,6 +23,8 @@ const Container = ({ children, navBar }: Props) => {
         return;
       case NavBarType.EDITOR:
         return <EditorNavBar />;
+      case NavBarType.PUBLIC:
+        return <PublicNavBar />;
       case NavBarType.STANDARD:
       default:
         return <NavBar />;

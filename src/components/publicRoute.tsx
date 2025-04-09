@@ -1,5 +1,5 @@
-import { route } from 'preact-router';
-import { ReactNode, useEffect } from 'preact/compat';
+import { Route, route } from 'preact-router';
+import { ReactNode } from 'preact/compat';
 
 import useAuthStore from '../stores/useAuthStore';
 
@@ -11,15 +11,20 @@ type Props = {
 const PublicRoute = ({ path, children } : Props) => {
   const { currentUser, loading } = useAuthStore();
 
-  useEffect(() => {
-    if (!loading && !currentUser) {
-      route('/dashboard', true);
-    }
-  }, [currentUser, loading]);
+  return (
+    <Route
+      path={path}
+      component={() => {
+        if (loading) return <p>Loading...</p>;
+        if (!loading && currentUser) {
+          route('/noteEditor', true);
+          return null;
+        }
 
-  if (loading) return <div>Loading...</div>;
-
-  return !currentUser ? children : null;
+        return !currentUser ? <>{children}</> : null;
+      }}
+    />
+  )
 };
 
 export default PublicRoute;

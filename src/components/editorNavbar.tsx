@@ -1,3 +1,4 @@
+import { route } from 'preact-router';
 import { ArrowUpOnSquareIcon, TrashIcon, DocumentTextIcon, PencilSquareIcon, ArrowsUpDownIcon } from '@heroicons/react/24/outline';
 
 import ThemeToggle from './themeToggle';
@@ -6,10 +7,14 @@ import { useEditorStore } from '../stores/useEditorStore';
 const EditorNavBar = () => {
   const { title, isPreview, setTitle, togglePreview, toggleView } = useEditorStore();
 
+  const navigateToHome = async () => {
+    route('/dashboard');
+  }
+
   return (
     <div className='p-8 w-full flex items-center justify-between'>
       <div className='w-64'>
-        <span className='text-zinc-700 dark:text-zinc-50 font-bold text-xl leading-none cursor-pointer'>marklet</span>
+        <div className='text-zinc-700 dark:text-zinc-50 font-bold text-xl leading-none cursor-pointer' onClick={navigateToHome}>marklet</div>
       </div>
       <input className='
             text-zinc-700 dark:text-zinc-50 bg-zinc-50 dark:bg-zinc-900

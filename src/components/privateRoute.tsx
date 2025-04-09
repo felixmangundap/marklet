@@ -1,5 +1,5 @@
-import { route } from 'preact-router';
-import { ReactNode, useEffect } from 'preact/compat';
+import { Route, route } from 'preact-router';
+import { ReactNode } from 'preact/compat';
 
 import useAuthStore from '../stores/useAuthStore';
 
@@ -8,18 +8,23 @@ type Props = {
   children: ReactNode;
 }
 
-const PrivateRoute = ({ path, children } : Props) => {
+const PrivateRoute = ({ path, children }: Props) => {
   const { currentUser, loading } = useAuthStore();
 
-  useEffect(() => {
-    if (!loading && !currentUser) {
-      route('/login', true);
-    }
-  }, [currentUser, loading]);
+  return (
+    <Route
+      path={path}
+      component={() => {
+        if (loading) return <p>Loading...</p>;
+        if (!loading && !currentUser) {
+          route('/', true);
+          return null;
+        }
 
-  if (loading) return <div>Loading...</div>; // Show a loader while checking auth state
-
-  return currentUser ? children : null;
+        return currentUser ? children : null;
+      }}
+    />
+  )
 };
 
 export default PrivateRoute;

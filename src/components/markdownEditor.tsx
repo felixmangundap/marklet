@@ -1,4 +1,3 @@
-import { useState } from 'preact/hooks';
 import { marked } from 'marked';
 import Helmet from 'preact-helmet';
 
@@ -7,8 +6,7 @@ import { useEditorStore } from '../stores/useEditorStore';
 
 
 const MarkdownEditor = () => {
-  const [markdown, setMarkdown] = useState('');
-  const { title, isPreview, isSplitView } = useEditorStore();
+  const { title, markdownNote, isPreview, isSplitView, setMarkdownNote } = useEditorStore();
 
   const renderSplitViewEditor = () => (
     <div className='overflow-hidden flex flex-row grow-1 relative'>
@@ -18,8 +16,8 @@ const MarkdownEditor = () => {
           h-full w-1/2 p-8 pb-32
           border-none outline-none resize-none
         '
-        value={markdown}
-        onInput={(e) => setMarkdown(e.currentTarget.value)}
+        value={markdownNote}
+        onInput={(e) => setMarkdownNote(e.currentTarget.value)}
       />
       <div
         className='
@@ -28,7 +26,7 @@ const MarkdownEditor = () => {
               border-l-2 border-zinc-700
               overflow-scroll
             '
-        dangerouslySetInnerHTML={{ __html: marked.parse(markdown) as string }}
+        dangerouslySetInnerHTML={{ __html: marked.parse(markdownNote) as string }}
       />
     </div>
   )
@@ -42,7 +40,7 @@ const MarkdownEditor = () => {
             preview prose prose-zinc max-w-none h-full w-full p-8 pb-32
             overflow-scroll
           '
-          dangerouslySetInnerHTML={{ __html: marked.parse(markdown) as string }}
+          dangerouslySetInnerHTML={{ __html: marked.parse(markdownNote) as string }}
         />
       )
     }
@@ -53,8 +51,8 @@ const MarkdownEditor = () => {
             h-full w-full p-8 pb-32
             border-none outline-none resize-none
           '
-        value={markdown}
-        onInput={(e) => setMarkdown(e.currentTarget.value)}
+        value={markdownNote}
+        onInput={(e) => setMarkdownNote(e.currentTarget.value)}
       />
     )
   }
