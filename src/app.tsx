@@ -5,11 +5,12 @@ import Helmet from 'preact-helmet';
 import { useThemeStore } from './stores/useThemeStore';
 import PublicRoute from './components/publicRoute';
 import PrivateRoute from './components/privateRoute';
-import Editor from './pages/editor';
-import AuthPage from './pages/auth';
 
 const Landing = lazy(() => import('./pages/landing'));
-const Notes = lazy(() => import('./pages/notes'));
+const Dashboard = lazy(() => import('./pages/dashboard'));
+const Editor = lazy(() => import('./pages/editor'));
+const Preview = lazy(() => import('./pages/preview'));
+const AuthPage = lazy(() => import('./pages/auth'));
 
 const App = () => {
   const { isDarkMode } = useThemeStore();
@@ -17,13 +18,6 @@ const App = () => {
   useEffect(() => {
     document.documentElement.classList.toggle('dark', isDarkMode);
   }, [isDarkMode]);
-
-  // onAuthStateChanged(auth, (user) => {
-  //   if (user) {
-  //     const uid = user.uid;
-  //   } else {
-  //   }
-  // });
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -45,16 +39,19 @@ const App = () => {
       />
       <Router>
         <PublicRoute path='/'>
-          <Landing />
+          {() => <Landing />}
         </PublicRoute>
         <PublicRoute path='/authPage'>
-          <AuthPage />
+          {() => <AuthPage />}
         </PublicRoute>
-        <PrivateRoute path='/noteEditor'>
-          <Editor />
+        <PrivateRoute path='/note/:id'>
+          {(props: any) => <Editor {...props} />}
+        </PrivateRoute>
+        <PrivateRoute path='/preview/:id'>
+          {(props: any) => <Preview {...props} />}
         </PrivateRoute>
         <PrivateRoute path='/dashboard'>
-          <Notes />
+          {() => <Dashboard />}
         </PrivateRoute>
       </Router>
     </Suspense>

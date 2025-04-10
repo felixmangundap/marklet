@@ -1,27 +1,29 @@
 import { Route, route } from 'preact-router';
-import { ReactNode } from 'preact/compat';
 
 import useAuthStore from '../stores/useAuthStore';
+import Container from './container';
 
 type Props = {
   path: string;
-  children: ReactNode;
+  children: (props: any) => preact.VNode;
+  [x:string]: any;
 }
 
-const PublicRoute = ({ path, children } : Props) => {
+const PublicRoute = (props : Props) => {
+  const { path, children } = props;
   const { currentUser, loading } = useAuthStore();
 
   return (
     <Route
       path={path}
       component={() => {
-        if (loading) return <p>Loading...</p>;
+        if (loading) return <Container><p>Loading...</p></Container>;
         if (!loading && currentUser) {
-          route('/noteEditor', true);
+          route('/dashboard', true);
           return null;
         }
 
-        return !currentUser ? <>{children}</> : null;
+        return !currentUser ? children(props) : null;
       }}
     />
   )
