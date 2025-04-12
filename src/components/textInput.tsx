@@ -30,7 +30,7 @@ const TextInput = (props: Props) => {
       </label>
       <input className='
         text-zinc-700 dark:text-zinc-50 bg-zinc-50 dark:bg-zinc-900
-        p-2 border-1 border-zinc-400 rounded-md rounded-full
+        p-2 border-1 border-zinc-300 rounded-md rounded-full
         font-normal leading-none
       '
         value={value}

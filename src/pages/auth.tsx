@@ -22,8 +22,8 @@ const AuthPage = () => {
     emailSignup(email, password, name);
   }
 
-  const signIn = () => {
-    emailLogin(email, password);
+  const signIn = async () => {
+    await emailLogin(email, password);
   }
 
   const isSignUpDisabled = () => {

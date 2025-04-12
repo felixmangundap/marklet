@@ -1,10 +1,14 @@
 import Container, { NavBarType } from "../components/container";
 import MarkdownEditor from "../components/markdownEditor";
 
-const Editor = () => {
+type Props = {
+  id: string;
+}
+
+const Editor = ({ id }: Props) => {
   return (
     <Container navBar={NavBarType.EDITOR}>
-      <MarkdownEditor />
+      <MarkdownEditor id={id} />
     </Container>
   );
 };

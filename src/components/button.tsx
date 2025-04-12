@@ -19,7 +19,7 @@ const Button = (props: Props) => {
       onClick={disabled ? undefined : onClick}
       className={`
         ${disabled ? 'cursor-default opacity-50' : 'cursor-pointer'}
-        text-zinc-50 dark:text-zinc-700 bg-zinc-700 dark:bg-zinc-50
+        text-zinc-50 dark:text-zinc-700 bg-zinc-900 dark:bg-zinc-50
         p-3 rounded-md leading-none text-center font-bold 
         ${className}
       `}

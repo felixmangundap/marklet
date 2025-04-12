@@ -8,7 +8,7 @@ import {
   User,
   UserCredential,
 } from 'firebase/auth';
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
 
 import { auth, firestore } from '../server/firebase';
 
@@ -25,7 +25,7 @@ interface AuthState {
 
 export const useAuthStore = create<AuthState>((set) => ({
   currentUser: null,
-  loading: true,
+  loading: false,
 
   setCurrentUser: (user: any) => set({ currentUser: user, loading: false }),
 
@@ -37,13 +37,13 @@ export const useAuthStore = create<AuthState>((set) => ({
     await createUserWithEmailAndPassword(auth, email, password)
       .then(async registeredUser => {
         try {
-          const docRef = await addDoc(collection(firestore, 'users'), {
+          await setDoc(doc(firestore, 'users', registeredUser.user.uid), {
             uid: registeredUser.user.uid,
             name,
             notes: [],
           });
 
-          console.log('Document written with ID: ', docRef.id);
+          console.log('Document written with ID: ', registeredUser.user.uid);
         } catch (e) {
           console.error('Error adding document: ', e);
         }

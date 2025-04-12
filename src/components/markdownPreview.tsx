@@ -1,26 +1,35 @@
-import { useState } from 'preact/hooks';
-import { marked } from 'marked';
-import Helmet from 'preact-helmet';
+// import { useEffect, useState } from 'preact/hooks';
+// import { marked } from 'marked';
+// import Helmet from 'preact-helmet';
 
-import { DocumentTextIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
+// import { DocumentTextIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
 // import hljs from 'highlight.js';
 import 'highlight.js/styles/github.css';
 
 
 const MarkdownPreview = () => {
-  const [markdown, setMarkdown] = useState('');
-  const [title, setTitle] = useState('');
-  const [isPreview, setIsPreview] = useState(false);
+  // const [markdown, setMarkdown] = useState('');
+  // const [title, setTitle] = useState('');
+  // const [isPreview, setIsPreview] = useState(false);
 
-  // marked.setOptions({
-  //   highlight: (code: string, lang: string) => {
-  //     return hljs.highlight(lang, code).value;
-  //   },
-  // });
+  // useEffect(() => {
+  //   const loadNote = async () => {
+  //     // const ref = doc(db, 'notes', noteId);
+  //     // const snap = await getDoc(ref);
+  //     // if (snap.exists() && snap.data().public) {
+  //     //   setContent(snap.data().content);
+  //     // } else {
+  //     //   setContent('Note not found or not public.');
+  //     // }
+  //   };
+
+  //   loadNote();
+  // }, [noteId]);
+
 
   return (
     <div className='overflow-hidden flex flex-col h-full w-full relative'>
-      <Helmet title={title || 'New Note'} />
+      {/* <Helmet title={title || 'New Note'} />
       <div className='overflow-hidden flex grow-1 relative'>
         <div className='absolute top-0 h-8 w-full bg-linear-to-b from-zinc-50/100 to-zinc-50/0 dark:from-zinc-900/100 dark:to-zinc-900/0 z-1' />
         <div
@@ -32,7 +41,7 @@ const MarkdownPreview = () => {
           dangerouslySetInnerHTML={{ __html: marked.parse(markdown) as string }}
         />
         <div className='absolute bottom-0 h-8 w-full bg-linear-to-t from-zinc-50/100 to-zinc-50/0 dark:from-zinc-900/100 dark:to-zinc-900/0 z-1' />
-      </div>
+      </div> */}
     </div>
   );
 };

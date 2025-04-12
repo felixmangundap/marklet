@@ -3,10 +3,37 @@ import Helmet from 'preact-helmet';
 
 import 'highlight.js/styles/github.css';
 import { useEditorStore } from '../stores/useEditorStore';
+import { debounce } from '../utils/debounce';
+import useAuthStore from '../stores/useAuthStore';
+import { useCallback, useEffect } from 'preact/hooks';
 
+type Props = {
+  id: string;
+}
 
-const MarkdownEditor = () => {
-  const { title, markdownNote, isPreview, isSplitView, setMarkdownNote } = useEditorStore();
+const MarkdownEditor = ({ id }: Props) => {
+  const { title, markdownNote, isPreview, isSplitView, setMarkdownNote, fetchNote, saveNote } = useEditorStore();
+  const { currentUser } = useAuthStore();
+  const uid = currentUser?.uid;
+
+  useEffect(() => {
+    if (!id) return;
+    
+    fetchNote(id);
+  }, [id]);
+
+  const debouncedSave = useCallback(
+    debounce((newNote: string, title: string) => {
+      if (uid && id) saveNote(id, newNote, title);
+    }, 2000),
+    []
+  );
+
+  const handleInput = (e: Event) => {
+    const newNote = (e.target as HTMLTextAreaElement).value;
+    setMarkdownNote(newNote);
+    debouncedSave(newNote, title);
+  };
 
   const renderSplitViewEditor = () => (
     <div className='overflow-hidden flex flex-row grow-1 relative'>
@@ -17,7 +44,7 @@ const MarkdownEditor = () => {
           border-none outline-none resize-none
         '
         value={markdownNote}
-        onInput={(e) => setMarkdownNote(e.currentTarget.value)}
+        onInput={handleInput}
       />
       <div
         className='
@@ -52,7 +79,7 @@ const MarkdownEditor = () => {
             border-none outline-none resize-none
           '
         value={markdownNote}
-        onInput={(e) => setMarkdownNote(e.currentTarget.value)}
+        onInput={handleInput}
       />
     )
   }
